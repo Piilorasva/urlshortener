@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Node testaus</title>
+	<meta charset="utf-8" />
+    <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+
+    <script>
+    function myFunction() {
+    document.getElementById("demo").innerHTML = "Paragraph changed.";
+}
+
+
+    function my() {
+    console.log("Mentiin oikean funktion sisälle");
+    $.post('/testi', function(data){
+    var vastaus = data;
+    console.log(data);
+    document.getElementById("demo").innerHTML = vastaus[0];    
+    });
+}
+
+function mysecond() {
+    console.log("Mentiin toisen funktion sisälle");
+    $.post('/testi2', function(data){
+    var vastaus = data;
+    console.log(data);
+    document.getElementById("demo").innerHTML = vastaus[0];    
+    });
+}
+    </script>
+</head>
+<body>
+	<p> testi</p>
+
+	<button type="button" onclick="my()">Try it</button>
+
+    <form action="/testi2" method ="post">
+        Long url:<br>
+        <input id="url" type="text" name="longurl" value="longurl">
+    <br>
+
+    <input type="submit" value="Submit">
+    </form>
+   
+    <p id="demo">A Paragraph.</p>
+	</body>
+</html>

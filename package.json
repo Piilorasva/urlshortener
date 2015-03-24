@@ -1,0 +1,17 @@
+{
+  "name": "testaus",
+  "version": "1.0.0",
+  "description": "urlshortener",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.12.2",
+    "connect": "^3.3.5",
+    "express": "^4.12.3",
+    "mysql": "^2.5.5"
+  }
+}
