@@ -44,14 +44,16 @@ app.post('/testi', function(req, res) {
 app.post('/testi2', function(req, res) {
 	console.log("Serverillä toisessa funktiossa");
 	var longUrl = req.body.longurl;
-	var shorterurl = longUrl.substring(0,15);
+	var urlstart = "127.0.0.1:7000/";
 	var paate = Math.floor((Math.random() * 99) + 1).toString().toString();
+	var shorturl = urlstart+paate;
 	console.log(longUrl);
-	var post= {pitkaurl: longUrl, lyhyturl:paate};
+	//var post= {pitkaurl: longUrl, lyhyturl:paate};
 	//var strQuery ="INSERT INTO url (pitkaurl,lyhyturl) VALUES ('pitka','lyhyt')";
 	//connection.query(strQuery);
-	connection.query("insert into url (pitkaurl,lyhyturl) values('"+longUrl+"','"+shorterurl+paate+"')");
+	connection.query("insert into url (pitkaurl,lyhyturl) values('"+longUrl+"','"+shorturl+"')");
 	console.log("mentiin koodin ohi");
+	res.send(shorturl);
 	
 });
 
