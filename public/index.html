@@ -5,30 +5,7 @@
 	<meta charset="utf-8" />
     <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
 
-    <script>
-    function myFunction() {
-    document.getElementById("demo").innerHTML = "Paragraph changed.";
-}
-
-
-    function my() {
-    console.log("Mentiin oikean funktion sisälle");
-    $.post('/testi', function(data){
-    var vastaus = data;
-    console.log(data);
-    document.getElementById("demo").innerHTML = vastaus[0];    
-    });
-}
-
-function mysecond() {
-    console.log("Mentiin toisen funktion sisälle");
-    $.post('/testi2', function(data){
-    var vastaus = data;
-    console.log(data);
-    document.getElementById("demo").innerHTML = vastaus[0];    
-    });
-}
-    </script>
+    <script src="script.js" type ="text/javascript"> </script>
 </head>
 <body>
 	<p> testi</p>
@@ -38,6 +15,14 @@ function mysecond() {
     <form action="/testi2" method ="post">
         Long url:<br>
         <input id="url" type="text" name="longurl" value="longurl">
+    <br>
+
+    <input type="submit" value="Submit">
+    </form>
+
+    <form action="/testi3" method ="post">
+        Short url:<br>
+        <input id="url" type="text" name="shorturl" value="shorturl">
     <br>
 
     <input type="submit" value="Submit">

@@ -2,6 +2,7 @@
 var express = require('express');
 var app = express();
 var path = require("path");
+var functio = require("./public/script.js");
 app.use(express.static(__dirname + '/public'));
 var conn = require("connect");
 var bodyParser = require("body-parser");
@@ -60,6 +61,33 @@ app.post('/testi2', function(req, res) {
 
 
 
+app.post('/testi3', function(req,res,next){
+  console.log("haepitka-funktiossa");
+  var link = req.body.shorturl; 
+  console.log(link); // tuohon laitat req.body.kentännimi (esim <input name="longurl" </input>)
+  var Query = "SELECT pitkaurl FROM url WHERE lyhyturl LIKE '"+link+"'"; // meillä databasessa siis 2 ominaisuutta pitkä ja lyhyt url
+  var sendThis;
+  
+  connection.query( Query, function(err, rows, fields){  
+    console.log("mentiin queryn sisälle");
+    if(err){
+   
+      console.log("No links were found!");
+    }else
+    {
+      console.log(JSON.stringify(rows));
+      for (i in rows)
+      {var linkki =rows[i].pitkaurl}
+      console.log(linkki); // käydään haettu url läpi
+      res.redirect(301,linkki);         // yhdistetään sinne
+      }
+ 
+  });
+});
+
+
+app.get('/:uid', functio.ohjaasivulle);
+
 
 /*Määritellään, palvelimen asetuksia*/
-var server = app.listen(7000, '127.0.0.1'); 
+app.listen(7000,'127.0.0.1'); 
