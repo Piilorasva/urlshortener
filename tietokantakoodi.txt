@@ -1,0 +1,19 @@
+ DROP DATABASE IF EXISTS urlshort;
+
+CREATE DATABASE urlshort;
+
+USE urlshort;
+
+
+
+CREATE TABLE url(
+
+id INT (10) NOT NULL AUTO_INCREMENT,
+
+pitkaurl VARCHAR (200) NOT NULL,
+
+lyhyturl VARCHAR (100) NOT NULL,
+
+CONSTRAINT id_pk PRIMARY KEY (id)
+)
+ENGINE = InnoDB;

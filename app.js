@@ -26,49 +26,29 @@ console.log("Toimii");
 
 
 
-/*Funktio hakee kaikki tiedot tyontekija-taulusta ja palauttaa taulukon*/
-app.post('/testi', function(req, res) {
-	console.log("Serverillä oikeassa funktiossa");
-	
-
-	var strQuery = 'select * from url where id = 1 ';
-	var sendThis;
-
-	connection.query( strQuery, function(err, rows, resp){
-  		console.log( rows );
-  		console.log("connectionion sisällä");
-  		sendThis = rows //JSON.stringify(rows);
-  		res.send(sendThis);
-  	});
-});
-
-app.post('/testi2', function(req, res) {
+app.post('/testi2', function(req, res) { //tähän tullaan ensimmäisestä formista index.html:stä
 	console.log("Serverillä toisessa funktiossa");
-	var longUrl = req.body.longurl;
+	var longUrl = req.body.longurl; //Otetaan muuttujaan talteen html:ään syötetty pitkä url
 	var urlstart = "127.0.0.1:7000/";
-	var paate = Math.floor((Math.random() * 99) + 1).toString().toString();
-	var shorturl = urlstart+paate;
+	var paate = Math.floor((Math.random() * 1000) + 1).toString().toString();
+	var shorturl = urlstart+paate; //Muodostetaan lyhyt url kahdesta edellisestä muuttujasta
 	console.log(longUrl);
-	//var post= {pitkaurl: longUrl, lyhyturl:paate};
-	//var strQuery ="INSERT INTO url (pitkaurl,lyhyturl) VALUES ('pitka','lyhyt')";
-	//connection.query(strQuery);
-	connection.query("insert into url (pitkaurl,lyhyturl) values('"+longUrl+"','"+shorturl+"')");
+	connection.query("insert into url (pitkaurl,lyhyturl) values('"+longUrl+"','"+shorturl+"')"); //Tehdään kysely tietokantaan
 	console.log("mentiin koodin ohi");
-	res.send(shorturl);
+	res.send(shorturl); //näytetään lyhyt url näytöllä käyttäjälle
 	
 });
 
 
 
 
-app.post('/testi3', function(req,res,next){
-  console.log("haepitka-funktiossa");
-  var link = req.body.shorturl; 
-  console.log(link); // tuohon laitat req.body.kentännimi (esim <input name="longurl" </input>)
-  var Query = "SELECT pitkaurl FROM url WHERE lyhyturl LIKE '"+link+"'"; // meillä databasessa siis 2 ominaisuutta pitkä ja lyhyt url
+app.post('/testi3', function(req,res,next){ //Tähän tullaan toisesta formista index.html:stä
+  var link = req.body.shorturl; //Tallennetaan lyhyt linkki muuttujaan html:stä
+  console.log(link);
+  var Query = "SELECT pitkaurl FROM url WHERE lyhyturl LIKE '"+link+"'";  //Tehdään kysely jolla haetaan pitkä url tietokannasta
   var sendThis;
   
-  connection.query( Query, function(err, rows, fields){  
+  connection.query( Query, function(err, rows, fields){  //Toteutetaan kysely
     console.log("mentiin queryn sisälle");
     if(err){
    
@@ -76,18 +56,19 @@ app.post('/testi3', function(req,res,next){
     }else
     {
       console.log(JSON.stringify(rows));
-      for (i in rows)
-      {var linkki =rows[i].pitkaurl}
-      console.log(linkki); // käydään haettu url läpi
-      res.redirect(301,linkki);         // yhdistetään sinne
+      for (i in rows)  //Käydään läpi kyselyn tulokset
+      {var linkki =rows[i].pitkaurl} //Tallennetaan muuttujaan kyselystä saatu rivi
+      console.log(linkki); 
+      res.redirect(301,linkki);         //ohjataan muuttujaan tallennettuun pitkään urliin
       }
  
   });
 });
 
 
-app.get('/:uid', functio.ohjaasivulle);
+app.get('/:uid', functio.ohjaasivulle); // käyttäjän syöttäessä selaimen osoitekenttään lyhyen urlin mennään tähän ja kutsutaan script.js-tiedosto
+//ssa olevaa funktiota joka sitten ohjaa käyttäjän oikealle sivulle.
 
 
-/*Määritellään, palvelimen asetuksia*/
+
 app.listen(7000,'127.0.0.1'); 
